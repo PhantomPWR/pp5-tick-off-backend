@@ -75,6 +75,7 @@ ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
     'localhost',
     '.gitpod.io',
+    '127.0.0.1',
 ]
 
 
@@ -101,9 +102,10 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'profiles',
-    # 'tasks',
-    # 'categories',
-    # 'comments',
+    'tasks',
+    'categories',
+    'comments',
+    'watchers',
 ]
 SITE_ID = 1
 
