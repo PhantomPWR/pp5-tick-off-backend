@@ -68,14 +68,15 @@ REST_AUTH_SERIALIZERS = {
 SECRET_KEY = 'django-insecure-41sqq#)0g0q*86i9nd+eqj%v$3=lj-gz#g8h%=54!yj#fr76)9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = 'DEV' in os.environ
+DEBUG = True
+# DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
     'localhost',
     '.gitpod.io',
     '127.0.0.1',
+    '127.0.0.1:8000',
 ]
 
 
