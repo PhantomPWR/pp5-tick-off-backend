@@ -8,8 +8,8 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('tasks', '0001_initial'),
         ('categories', '0001_initial'),
+        ('tasks', '0001_initial'),
     ]
 
     operations = [
