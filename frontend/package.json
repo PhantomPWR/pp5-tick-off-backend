@@ -24,8 +24,8 @@
   },
   "scripts": {
     "heroku-prebuild": "npm install -g serve",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "export SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
+    "build": "export SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -57,5 +57,5 @@
     "node": "16.19.1",
     "npm": "8.19.3"
   },
-  "proxy": "http://localhost:8000/"
+  "proxy": "https://127.0.0.1:8000/"
 }
