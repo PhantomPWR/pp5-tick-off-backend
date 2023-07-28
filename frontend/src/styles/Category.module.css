@@ -1,0 +1,19 @@
+.Category {
+    background-color: #ffffff;
+    border: 1px solid #dadadf;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+ .Category i {
+    font-size: 1.2em;
+ }
+
+.Category a {
+    text-decoration: none;
+}
+
+.CategoryBody {
+    background-color: #f4f4f4;
+}

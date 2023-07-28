@@ -1,0 +1,42 @@
+.NavBar {
+    background-color: #ffffff;
+    border: 1px solid #dadadf;
+  }
+
+.Brand {
+  display: flex;
+  align-items: center;
+}
+
+.Brand,
+.Brand strong,
+.Brand em,
+.Brand i {
+  color: #663399;
+}
+
+.Brand i {
+    font-size: 1.6rem;
+    padding: 7px;
+    vertical-align: middle;
+}
+  
+.Brand i:hover {
+    cursor: initial;
+    transition: none;
+    color: initial;
+}
+
+.NavLink {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+.NavLink .Avatar {
+  margin-top: 0;
+}
+  
+.Active i {
+    color: #639;
+  }

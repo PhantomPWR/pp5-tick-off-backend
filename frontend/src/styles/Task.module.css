@@ -1,0 +1,56 @@
+.Task {
+    background-color: #ffffff;
+    border: 1px solid #dadadf;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.Task figure,
+h5 {
+    margin: 0 0;
+}
+
+ .Task i {
+    font-size: 1.2em;
+ }
+
+.Task a {
+    text-decoration: none;
+}
+
+.TaskBody {
+    background-color: #fff;
+}
+
+.Eye {
+    color: #f85032;
+}
+
+.Eye:hover {
+    color: #663399;
+}
+
+.EyeOutline:hover {
+    color: #f85032;
+}
+
+.TaskBar {
+    background-color: #f4f4f4;
+    margin-top: 1em;
+}
+
+.TaskBar a:hover {
+    border-color: transparent;
+    text-decoration: none;
+}
+
+.OverDue {
+    border: 2px solid red;
+    color: red;
+}
+
+.DueToday {
+    border: 2px solid darkorange;
+    color: darkorange;
+}
