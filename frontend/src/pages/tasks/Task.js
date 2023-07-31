@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from "react";
-import styles from "../../styles/Task.module.css";
-import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { Link, useHistory } from "react-router-dom";
 import { MoreDropdown } from "../../components/MoreDropdown";
 import axios from "axios";
+import styles from "../../styles/Task.module.css";
 import { axiosRes } from "../../api/axiosDefaults";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import {
   Card,
   Media,
@@ -79,6 +79,7 @@ const Task = (props) => {
     }
   }, [assigned_to]);
 
+
   return (
     <Card className={styles.Task}>
       <Card.Body className={styles.TaskBody}>
@@ -116,7 +117,11 @@ const Task = (props) => {
               <strong className="fw-bold">Assigned to: </strong>
               <div className="row">
                 <p className="col-6"><i className="fas fa-crown"></i>{owner}</p>
-                <p className="col-6"><i className="fas fa-user-check" />{assignedUser}</p>
+                {assignedUser ? (
+                  <p className="col-6"><i className="fas fa-user-check" />{assignedUser}</p>
+                ):(
+                  <p className="col-6"><i className="fas fa-user-check" />None yet</p>
+                )}
               </div>
             </div>
             <div className="row">

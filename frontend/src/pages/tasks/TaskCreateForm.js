@@ -39,8 +39,8 @@ function TaskCreateForm() {
     useEffect(() => {
       const fetchTaskCategoryChoices = async () => {
         try {
-          const response = await axiosReq.get('/category-choices/');
-          const categoryChoices = response.data.map(category => ({
+          let response = await axiosReq.get('/category-choices/');
+          let categoryChoices = response.data.map(category => ({
             key: category.id,
             value: category.value,
             label: category.label
@@ -114,11 +114,6 @@ function TaskCreateForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Check if assigned_to is empty
-    if (!assigned_to) {
-      setErrors({ assigned_to: ['Please select a user'] });
-      return;
-    }
     const formData = new FormData();
 
     formData.append('title', title);
@@ -132,7 +127,6 @@ function TaskCreateForm() {
     formData.append('owner', owner);
     formData.append('due_date', due_date);
     formData.append('assigned_to', assigned_to);
-  
     try {
         const {data} = await axiosReq.post('/tasks/', formData, {
           headers: {

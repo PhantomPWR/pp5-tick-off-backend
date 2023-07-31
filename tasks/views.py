@@ -28,6 +28,8 @@ class TaskFilter(filters.FilterSet):
         field_name='due_date',
         lookup_expr='month'
     )
+    assigned_to = filters.CharFilter(field_name='assigned_to__owner')
+    # user__username = filters.CharFilter(field_name='user__username')
 
 
 class TaskList(generics.ListCreateAPIView):
@@ -45,6 +47,13 @@ class TaskList(generics.ListCreateAPIView):
         comment_count=Count('comment', distinct=True),
     ).order_by('-created_date')
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        assigned_to = self.request.query_params.get('assigned_to')
+        if assigned_to:
+            queryset = queryset.filter(assigned_to__id=assigned_to)
+        return queryset
+
     filter_backends = [
         drf_filters.OrderingFilter,
         drf_filters.SearchFilter,
@@ -57,7 +66,7 @@ class TaskList(generics.ListCreateAPIView):
     filterset_fields = [
         'owner__username',
         'owner__profile__name',
-        'assigned_to__username',
+        'assigned_to',
         'title',
         'description',
         'priority',
@@ -66,7 +75,7 @@ class TaskList(generics.ListCreateAPIView):
     search_fields = [
         'owner__username',
         'owner__profile__name',
-        'assigned_to__username',
+        'assigned_to',
         'title',
         'description',
         'priority',

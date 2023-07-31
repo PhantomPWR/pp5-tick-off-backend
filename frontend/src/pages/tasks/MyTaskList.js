@@ -31,8 +31,8 @@ function MyTaskList({ message, filter = "" }) {
 
     const fetchTasks = async () => {
       try {
-        // let url = `/mytasks/?${filter}`;
-        let url = `/mytasks/`;
+        let url = `/mytasks/?${filter}`;
+        // let url = `/mytasks/`;
         if (query) {
           url += `&search=${query}`;
         }
@@ -42,7 +42,7 @@ function MyTaskList({ message, filter = "" }) {
         if (taskPriority) {
           url += `&priority=${taskPriority}`;
         }
-        const { data } = await axiosReq.get(url);
+        let { data } = await axiosReq.get(url);
         setTasks(data);
         setHasLoaded(true);
       } catch (err) {
