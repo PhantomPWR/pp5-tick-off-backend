@@ -21,12 +21,17 @@ class TaskSerializer(serializers.ModelSerializer):
     completed_date = serializers.ReadOnlyField()
     assigned_to = serializers.PrimaryKeyRelatedField(
         queryset=User.objects.all(),
-        many=True,
     )
 
+    # def get_is_owner(self, obj):
+    #     request = self.context['request']
+    #     return request.user == obj.owner
     def get_is_owner(self, obj):
-        request = self.context['request']
-        return request.user == obj.owner
+        request = self.context.get('request')
+        if request:
+            return request.user == obj.owner
+        return False
+
 
     def get_created_date(self, obj):
         return naturaltime(

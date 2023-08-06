@@ -1,12 +1,12 @@
 from django.db import models
 from django.utils import timezone
 from datetime import date
-# from django.contrib.auth.models import User
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+# from django.contrib.auth import get_user_model
 
 from categories.models import Category
 
-User = get_user_model()
+# User = get_user_model()
 
 
 class Task(models.Model):
@@ -48,9 +48,16 @@ class Task(models.Model):
         blank=True,
         default=''
     )
-    assigned_to = models.ManyToManyField(
+    # assigned_to = models.ManyToManyField(
+    #     User,
+    #     blank=True,
+    #     related_name='assigned_to'
+    # )
+    assigned_to = models.ForeignKey(
         User,
         blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
         related_name='assigned_to'
     )
 

@@ -1,12 +1,12 @@
 from django.http import Http404, JsonResponse
+from rest_framework.response import Response
 from django.db.models import Count
 from django_filters.rest_framework import DjangoFilterBackend
-from django_filters import rest_framework as filters
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from comments.models import Comment
 from rest_framework import (
-    filters as drf_filters,
+    filters,
     generics,
     permissions,
     status,
@@ -14,22 +14,10 @@ from rest_framework import (
 from .models import Task, Category
 from .serializers import (
     TaskSerializer,
-    TaskDetailSerializer
+    TaskDetailSerializer,
+    AssignedToSerializer
 )
 from drf_api.permissions import IsOwnerOrReadOnly
-
-
-class TaskFilter(filters.FilterSet):
-    created_date__month = filters.NumberFilter(
-        field_name='created_date',
-        lookup_expr='month'
-    )
-    due_date__month = filters.NumberFilter(
-        field_name='due_date',
-        lookup_expr='month'
-    )
-    assigned_to = filters.CharFilter(field_name='assigned_to__owner')
-    # user__username = filters.CharFilter(field_name='user__username')
 
 
 class TaskList(generics.ListCreateAPIView):
@@ -47,17 +35,10 @@ class TaskList(generics.ListCreateAPIView):
         comment_count=Count('comment', distinct=True),
     ).order_by('-created_date')
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        assigned_to = self.request.query_params.get('assigned_to')
-        if assigned_to:
-            queryset = queryset.filter(assigned_to__id=assigned_to)
-        return queryset
-
     filter_backends = [
-        drf_filters.OrderingFilter,
-        drf_filters.SearchFilter,
-        filters.DjangoFilterBackend
+        filters.OrderingFilter,
+        filters.SearchFilter,
+        DjangoFilterBackend
     ]
 
     ordering_fields = [
@@ -66,7 +47,7 @@ class TaskList(generics.ListCreateAPIView):
     filterset_fields = [
         'owner__username',
         'owner__profile__name',
-        'assigned_to',
+        'assigned_to__id',
         'title',
         'description',
         'priority',
@@ -75,15 +56,27 @@ class TaskList(generics.ListCreateAPIView):
     search_fields = [
         'owner__username',
         'owner__profile__name',
-        'assigned_to',
+        'assigned_to__id',
         'title',
         'description',
         'priority',
         'task_status',
     ]
 
+
+    def get(self, request):
+        assigned_to = request.GET.get('assigned_to')
+        if assigned_to:
+            tasks_assigned_to = Task.objects.filter(assigned_to=assigned_to)
+        else:
+            tasks_assigned_to = Task.objects.all()
+        serializer = TaskSerializer(tasks_assigned_to, many=True, context={'request': request})
+        return Response(serializer.data)
+
+
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
 
 
 class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
