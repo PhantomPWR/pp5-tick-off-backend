@@ -47,7 +47,7 @@ class TaskList(generics.ListCreateAPIView):
     filterset_fields = [
         'owner__username',
         'owner__profile__name',
-        'assigned_to__id',
+        'assigned_to',
         'title',
         'description',
         'priority',
@@ -56,7 +56,7 @@ class TaskList(generics.ListCreateAPIView):
     search_fields = [
         'owner__username',
         'owner__profile__name',
-        'assigned_to__id',
+        'assigned_to',
         'title',
         'description',
         'priority',
