@@ -1,10 +1,9 @@
 # from django.http import Http404, JsonResponse
-# from rest_framework.response import Response
-from django.db.models import Count
 # from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.views import APIView
+# from django.db.models import Count
+# from rest_framework.views import APIView
+# from comments.models import Comment
 # from rest_framework.response import Response
-from comments.models import Comment
 # from rest_framework import (
 #     filters,
 #     generics,
@@ -76,6 +75,9 @@ from comments.models import Comment
 #     def perform_create(self, serializer):
 #         serializer.save(owner=self.request.user)
 
+from django.db.models import Count
+from rest_framework.views import APIView
+from comments.models import Comment
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, generics, permissions
 from .models import Task
@@ -102,7 +104,6 @@ class TaskList(generics.ListCreateAPIView):
     ]
     search_fields = [
         'owner__username',
-        'owner__profile',
         'title',
         'description',
         'priority',
@@ -111,6 +112,7 @@ class TaskList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
 
 
 
