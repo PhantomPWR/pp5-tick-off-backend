@@ -1,80 +1,3 @@
-# from django.http import Http404, JsonResponse
-# from django_filters.rest_framework import DjangoFilterBackend
-# from django.db.models import Count
-# from rest_framework.views import APIView
-# from comments.models import Comment
-# from rest_framework.response import Response
-# from rest_framework import (
-#     filters,
-#     generics,
-#     permissions,
-#     status,
-# )
-# from .models import Task, Category
-# from .serializers import (
-#     TaskSerializer,
-#     TaskDetailSerializer,
-#     AssignedToSerializer
-# )
-# from drf_api.permissions import IsOwnerOrReadOnly
-
-
-# class TaskList(generics.ListCreateAPIView):
-#     """
-#     - List all tasks
-#     - Create task if logged in
-#     """
-
-#     serializer_class = TaskSerializer
-#     permission_classes = [
-#         permissions.IsAuthenticatedOrReadOnly
-#     ]
-
-#     # queryset = Task.objects.annotate(
-#     #     comment_count=Count('comment', distinct=True),
-#     # ).order_by('-created_date')
-#     queryset = Task.objects.all()
-
-#     filter_backends = [
-#         filters.OrderingFilter,
-#         filters.SearchFilter,
-#         DjangoFilterBackend
-#     ]
-
-#     ordering_fields = [
-#         'comment_count',
-#     ]
-#     filterset_fields = [
-#         'owner__username',
-#         'assigned_to',
-#         'title',
-#         'description',
-#         'priority',
-#         'task_status',
-#     ]
-#     search_fields = [
-#         'owner__username',
-#         'assigned_to',
-#         'title',
-#         'description',
-#         'priority',
-#         'task_status',
-#     ]
-
-
-#     def get(self, request):
-#         assigned_to = request.GET.get('assigned_to')
-#         if assigned_to:
-#             tasks_assigned_to = Task.objects.filter(assigned_to=assigned_to)
-#         else:
-#             tasks_assigned_to = Task.objects.all()
-#         serializer = TaskSerializer(tasks_assigned_to, many=True, context={'request': request})
-#         return Response(serializer.data)
-
-
-#     def perform_create(self, serializer):
-#         serializer.save(owner=self.request.user)
-
 from django.db.models import Count
 from rest_framework.views import APIView
 from comments.models import Comment
@@ -108,6 +31,7 @@ class TaskList(generics.ListCreateAPIView):
         'description',
         'priority',
         'task_status',
+        'created_date',
     ]
 
     def perform_create(self, serializer):
