@@ -2,10 +2,9 @@ from django.contrib import admin
 from .models import Category
 
 
+@admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-
-    class Meta:
-        verbose_name_plural = "Categories"
+    pass
 
 
-admin.site.register(Category, CategoryAdmin)
+Category._meta.verbose_name_plural = "Categories"
