@@ -3,7 +3,8 @@ from rest_framework.views import APIView
 from comments.models import Comment
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, generics, permissions
-from .models import Task
+from rest_framework.response import Response
+from .models import Task, Category
 from .serializers import TaskSerializer, TaskDetailSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
 
