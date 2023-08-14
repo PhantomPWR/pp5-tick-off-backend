@@ -58,6 +58,6 @@ class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     def get_object(self):
         try:
             category_id = self.kwargs['pk']  # Retrieve the category ID/PK from the URL parameters
-            return self.queryset.get(pk=id)
+            return self.queryset.get(pk=category_id)
         except Category.DoesNotExist:
             raise Http404
