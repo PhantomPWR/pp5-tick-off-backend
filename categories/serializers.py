@@ -22,12 +22,12 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class CategoryDetailSerializer(CategorySerializer):
-    title = serializers.CharField(max_length=100)
-    description = serializers.CharField(max_length=255)
-    related_tasks = serializers.PrimaryKeyRelatedField(
-        many=True,
-        queryset=Task.objects.all(),
-    )
+    # title = serializers.CharField(max_length=100)
+    # description = serializers.CharField(max_length=255)
+    # related_tasks = serializers.PrimaryKeyRelatedField(
+    #     many=True,
+    #     queryset=Task.objects.all(),
+    # )
 
     class Meta:
         model = Category
