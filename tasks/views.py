@@ -6,7 +6,7 @@ from rest_framework import filters, generics, permissions
 from rest_framework.response import Response
 from .models import Task, Category
 from .serializers import TaskSerializer, TaskDetailSerializer
-from drf_api.permissions import IsOwnerOrReadOnly, IsAssignedUserOrReadOnly
+from drf_api.permissions import IsAssignedUserOrOwnerOrReadOnly
 
 class TaskList(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
