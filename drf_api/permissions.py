@@ -1,4 +1,5 @@
 from rest_framework import permissions
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
@@ -6,3 +7,16 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         return obj.owner == request.user
+
+
+class IsAssignedUserOrOwnerOrReadOnly(BasePermission):
+    """
+    Custom permission to only allow assigned user and task owner to update task status.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        if request.method in SAFE_METHODS:
+            return True
+
+        # Check if the current user is the assigned user or the task owner
+        return obj.assigned_user == request.user or obj.owner == request.user

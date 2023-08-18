@@ -6,7 +6,7 @@ from rest_framework import filters, generics, permissions
 from rest_framework.response import Response
 from .models import Task, Category
 from .serializers import TaskSerializer, TaskDetailSerializer
-from drf_api.permissions import IsOwnerOrReadOnly
+from drf_api.permissions import IsOwnerOrReadOnly, IsAssignedUserOrReadOnly
 
 class TaskList(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
@@ -48,7 +48,8 @@ class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
     """
 
     serializer_class = TaskDetailSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+    # permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsAssignedUserOrOwnerOrReadOnly]
     queryset = Task.objects.annotate(
         comment_count=Count('comment', distinct=True),
     ).order_by('-created_date')
