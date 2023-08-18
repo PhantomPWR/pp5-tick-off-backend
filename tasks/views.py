@@ -48,7 +48,6 @@ class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
     """
 
     serializer_class = TaskDetailSerializer
-    # permission_classes = [IsOwnerOrReadOnly]
     permission_classes = [IsAssignedUserOrOwnerOrReadOnly]
     queryset = Task.objects.annotate(
         comment_count=Count('comment', distinct=True),
