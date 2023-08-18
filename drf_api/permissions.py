@@ -19,4 +19,4 @@ class IsAssignedUserOrOwnerOrReadOnly(BasePermission):
             return True
 
         # Check if the current user is the assigned user or the task owner
-        return obj.assigned_user == request.user or obj.owner == request.user
+        return obj.assigned_to == request.user or obj.owner == request.user
