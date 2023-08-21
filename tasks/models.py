@@ -30,7 +30,7 @@ class Task(models.Model):
         auto_now_add=True,
     )
     due_date = models.DateTimeField(
-        auto_now=True,
+        auto_now=False,
         null=True,
         blank=True,
     )
