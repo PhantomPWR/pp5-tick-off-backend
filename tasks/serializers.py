@@ -51,6 +51,12 @@ class TaskSerializer(serializers.ModelSerializer):
             format="%d-%m-%Y %H:%M:%S"
         )
 
+    def get_completed_date(self, obj):
+        return naturaltime(
+            obj.due_date,
+            format="%d-%m-%Y %H:%M:%S"
+        )
+
     def update(self, instance, validated_data):
         if ('task_status' in validated_data and
            validated_data['task_status'] == 'COMPLETED'):
