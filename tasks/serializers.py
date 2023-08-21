@@ -33,23 +33,23 @@ class TaskSerializer(serializers.ModelSerializer):
         return False
 
 
-    def get_created_date(self, obj):
-        return naturaltime(
-            obj.created_date,
-            format="%d-%m-%Y %H:%M:%S"
-        )
+    # def get_created_date(self, obj):
+    #     return naturaltime(
+    #         obj.created_date,
+    #         format="%d-%m-%Y %H:%M:%S"
+    #     )
 
-    def get_updated_date(self, obj):
-        return naturaltime(
-            obj.updated_date,
-            format="%d-%m-%Y %H:%M:%S"
-        )
+    # def get_updated_date(self, obj):
+    #     return naturaltime(
+    #         obj.updated_date,
+    #         format="%d-%m-%Y %H:%M:%S"
+    #     )
 
-    def get_due_date(self, obj):
-        return naturaltime(
-            obj.due_date,
-            format="%d-%m-%Y %H:%M:%S"
-        )
+    # def get_due_date(self, obj):
+    #     return naturaltime(
+    #         obj.due_date,
+    #         format="%d-%m-%Y %H:%M:%S"
+    #     )
 
     def update(self, instance, validated_data):
         if ('task_status' in validated_data and
