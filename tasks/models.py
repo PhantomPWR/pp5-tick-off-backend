@@ -29,7 +29,7 @@ class Task(models.Model):
     created_date = models.DateTimeField(
         auto_now_add=True,
     )
-    due_date = models.DateTimeField(
+    due_date = models.DateField(
         auto_now=False,
         null=True,
         blank=True,
