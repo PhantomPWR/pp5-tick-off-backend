@@ -39,9 +39,6 @@ class TaskList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-
-
-
 class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     - Get single task detail
