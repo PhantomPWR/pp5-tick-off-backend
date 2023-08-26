@@ -22,6 +22,13 @@ class TaskSerializer(serializers.ModelSerializer):
     assigned_to = serializers.PrimaryKeyRelatedField(
         queryset=User.objects.all(),
     )
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(),
+    )
+    category_title = serializers.SerializerMethodField()
+
+    def get_category_title(self, obj):
+        return obj.category.title
 
     def get_is_owner(self, obj):
         request = self.context.get('request')
@@ -51,6 +58,7 @@ class TaskSerializer(serializers.ModelSerializer):
             'assigned_to',
             'title',
             'category',
+            'category_title',
             'description',
             'image',
             'profile_id',
@@ -68,6 +76,11 @@ class TaskSerializer(serializers.ModelSerializer):
 class TaskDetailSerializer(TaskSerializer):
     task = serializers.ReadOnlyField(source='task.id')
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['category_title'] = instance.category.title
+        return data
+
     class Meta:
         model = Task
         fields = [
@@ -77,6 +90,7 @@ class TaskDetailSerializer(TaskSerializer):
             'assigned_to',
             'title',
             'category',
+            'category_title',
             'description',
             'image',
             'profile_id',
@@ -105,3 +119,5 @@ class PriorityChoicesSerializer(serializers.Serializer):
 class CategoryChoicesSerializer(serializers.Serializer):
     value = serializers.CharField(max_length=25)
     label = serializers.CharField(max_length=25)
+
+

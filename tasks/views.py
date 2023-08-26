@@ -11,7 +11,7 @@ from drf_api.permissions import IsAssignedUserOrOwnerOrReadOnly
 class TaskList(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    queryset = Task.objects.all()
+    # queryset = Task.objects.all()
     filter_backends = [
         DjangoFilterBackend,
         filters.OrderingFilter,
@@ -25,7 +25,8 @@ class TaskList(generics.ListCreateAPIView):
         'description',
         'priority',
         'task_status',
-        'category'
+        'category',
+        'category__title'
     ]
     search_fields = [
         'owner__username',
@@ -34,8 +35,15 @@ class TaskList(generics.ListCreateAPIView):
         'priority',
         'task_status',
         'created_date',
+        'category__title'
     ]
-
+    
+    def get_queryset(self):
+        queryset = Task.objects.all()
+        category_title = self.request.query_params.get('category__title', None)
+        if category_title is not None:
+            queryset = queryset.filter(category__title__iexact=category_title)
+        return queryset
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
