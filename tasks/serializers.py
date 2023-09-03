@@ -4,6 +4,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from tasks.models import Task
 from categories.models import Category
+from comments.models import Comment
 
 
 class AssignedToSerializer(serializers.ModelSerializer):

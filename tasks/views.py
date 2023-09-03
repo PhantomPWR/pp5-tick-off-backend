@@ -37,12 +37,18 @@ class TaskList(generics.ListCreateAPIView):
         'created_date',
         'category__title'
     ]
+    ordering_fields = [
+        'comment_count',
+    ]
     
     def get_queryset(self):
         queryset = Task.objects.all()
         category_title = self.request.query_params.get('category__title', None)
         if category_title is not None:
             queryset = queryset.filter(category__title__iexact=category_title)
+        queryset = Task.objects.annotate(
+        comment_count=Count('comment', distinct=True),
+    ).order_by('-created_date')
         return queryset
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
