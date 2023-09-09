@@ -4,6 +4,9 @@ from tasks.models import Task
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    """
+    - Serializer class for the Category model
+    """
     title = serializers.CharField(max_length=100)
     description = serializers.CharField(max_length=255)
     related_tasks = serializers.PrimaryKeyRelatedField(
@@ -22,6 +25,10 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class CategoryDetailSerializer(CategorySerializer):
+    """
+    - Serializer class for the CategoryDetail model
+    - Inherits from CategorySerializer
+    """
 
     class Meta:
         model = Category

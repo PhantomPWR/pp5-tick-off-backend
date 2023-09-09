@@ -1,17 +1,22 @@
 from django.db.models import Count
 from rest_framework.views import APIView
-from comments.models import Comment
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, generics, permissions
 from rest_framework.response import Response
-from .models import Task, Category
 from .serializers import TaskSerializer, TaskDetailSerializer
 from drf_api.permissions import IsAssignedUserOrOwnerOrReadOnly
+from .models import Task, Category
+from comments.models import Comment
+
 
 class TaskList(generics.ListCreateAPIView):
+    """
+    - API endpoint for listing and creating tasks
+    - Allow task create if logged in
+    """
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    # queryset = Task.objects.all()
+
     filter_backends = [
         DjangoFilterBackend,
         filters.OrderingFilter,
@@ -42,21 +47,30 @@ class TaskList(generics.ListCreateAPIView):
     ]
     
     def get_queryset(self):
+        """
+        - Retrieve the queryset of tasks
+        - Add filtering by category title
+        - Add comment_count to each task
+        """
         queryset = Task.objects.all()
         category_title = self.request.query_params.get('category__title', None)
         if category_title is not None:
             queryset = queryset.filter(category__title__iexact=category_title)
         queryset = Task.objects.annotate(
-        comment_count=Count('comment', distinct=True),
-    ).order_by('-created_date')
+            comment_count=Count('comment', distinct=True),
+        ).order_by('-created_date')
         return queryset
+
     def perform_create(self, serializer):
+        """
+        - Save created task and assign the owner
+        """
         serializer.save(owner=self.request.user)
 
 
 class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    - Get single task detail
+    - API endpoint to read, update & delete a single task
     """
 
     serializer_class = TaskDetailSerializer
@@ -68,7 +82,7 @@ class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class StatusChoicesView(APIView):
     """
-    - Get available task status choices
+    - API endpoint for getting available task status choices
     """
 
     def get(self, request):
@@ -80,7 +94,7 @@ class StatusChoicesView(APIView):
 
 class PriorityChoicesView(APIView):
     """
-    - Get available task priority choices
+    - API endpoint for getting available task priority choices
     """
 
     def get(self, request):
@@ -92,7 +106,7 @@ class PriorityChoicesView(APIView):
 
 class CategoryChoicesView(APIView):
     """
-    - Get available category choices
+    - API endpoint for getting available category choices
     """
 
     def get(self, request):
