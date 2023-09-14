@@ -102,11 +102,11 @@ class TaskDetailSerializer(TaskSerializer):
     """
     task = serializers.ReadOnlyField(source='task.id')
 
-    """
-    - Convert supplied Task object to a representation
-      suitable for response payloads
-    """
     def to_representation(self, instance):
+        """
+        - Convert supplied Task object to a representation
+        suitable for response payloads
+        """
         data = super().to_representation(instance)
         data['category_title'] = instance.category.title
         return data
@@ -158,5 +158,3 @@ class CategoryChoicesSerializer(serializers.Serializer):
     """
     value = serializers.CharField(max_length=25)
     label = serializers.CharField(max_length=25)
-
-

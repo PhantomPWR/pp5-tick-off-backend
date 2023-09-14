@@ -45,7 +45,7 @@ class TaskList(generics.ListCreateAPIView):
     ordering_fields = [
         'comment_count',
     ]
-    
+
     def get_queryset(self):
         """
         - Retrieve the queryset of tasks
@@ -113,5 +113,8 @@ class CategoryChoicesView(APIView):
         categories = Category.objects.all()
         category_choices = []
         for category in categories:
-            category_choices.append({'value': category.id, 'label': category.title})
+            category_choices.append({
+                'value': category.id,
+                'label': category.title
+            })
         return Response(category_choices)

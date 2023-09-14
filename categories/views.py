@@ -57,7 +57,8 @@ class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def get_object(self):
         """
-         - Retrieve the category object with the given ID/PK from the URL parameters
+         - Retrieve the category object with given
+           ID/PK from the URL parameters
          - Return the category object
          - Raise 404 if not found
         """
